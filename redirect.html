@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+        // Extract the session ID from the query params
+        const urlParams = new URLSearchParams(window.location.search);
+        // const sessionId = urlParams.get("status");
+
+        // Define the deep link URL
+        const deepLink = `playmates://`;
+
+        // Redirect after a short delay
+        setTimeout(() => {
+            window.location.href = deepLink;
+        }, 1000); // 1-second delay
+    </script>
+</head>
+<body>
+    <h2>Redirecting to the app...</h2>
+</body>
+</html>
