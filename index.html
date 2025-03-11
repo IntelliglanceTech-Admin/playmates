@@ -9,6 +9,8 @@
         const sessionId = urlParams.get("session_id");
         let deepLink;
 
+        alert(sessionId);
+
         if(!sessionId){
             deepLink = `playmates://playmate-registeration?stauts=CANCELED`;
         }
