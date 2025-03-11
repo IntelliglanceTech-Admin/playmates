@@ -10,10 +10,10 @@
         let deepLink;
 
         if(!sessionId){
-            deepLink = `playmates://payment-cancel`;
+            deepLink = `playmates://playmate-registeration?stauts=FAILED`;
         }
 
-        deepLink = `playmates://payment-success?session_id=${sessionId}`;
+        deepLink = `playmates://payment-success?session_id=${sessionId}&status=SUCCESS`;
 
         setTimeout(() => {
             window.location.href = deepLink;
