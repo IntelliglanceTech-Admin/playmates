@@ -12,10 +12,10 @@
         alert(sessionId);
 
         if(!sessionId){
-            deepLink = `playmates://playmate-registeration?stauts=CANCELED`;
+            deepLink = `playmates://playmate-registration?stauts=CANCELED`;
         }
 
-        deepLink = `playmates://playmate-registeration?session_id=${sessionId}&status=SUCCESS`;
+        deepLink = `playmates://playmate-registration?session_id=${sessionId}&status=SUCCESS`;
 
         setTimeout(() => {
             window.location.href = deepLink;
