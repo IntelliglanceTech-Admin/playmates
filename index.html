@@ -6,14 +6,11 @@
     <title>Redirecting...</title>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // ✅ Extract session_id from URL Query Params (not hash)
+            // ✅ Extract Query Parameters (Use window.location.search instead of hash)
             const urlParams = new URLSearchParams(window.location.search);
+            const screen = urlParams.get("screen"); // e.g., "playmate-home"
             const sessionId = urlParams.get("session_id");
-            // ✅ Read Deep Link Parameters
-            const screen = urlParams.get("screen"); // e.g., "eventDetails"
 
-            alert(screen);
-            
             let deepLink = "";
 
             // ✅ Handle Different Screens
@@ -35,12 +32,10 @@
 
             console.log("🔹 Redirecting to:", deepLink);
 
-            // ✅ Redirect to Deep Link
-            setTimeout(() => {
-                window.location.href = deepLink;
-            }, 1000);
+            // ✅ Attempt to Open App Deep Link
+            window.location.href = deepLink;
 
-            // ✅ Provide Fallback for Desktop Browsers
+            // ✅ Provide a Fallback for Desktop Users
             setTimeout(() => {
                 document.body.innerHTML = `
                     <h2>Redirecting...</h2>
