@@ -13,6 +13,8 @@
             // ✅ Read Deep Link Parameters
             const screen = params.get("screen"); // e.g., "eventDetails"
 
+            alert(screen);
+
             // ✅ Extract session_id from URL Query Params (not hash)
             const urlParams = new URLSearchParams(window.location.search);
             const sessionId = urlParams.get("session_id");
