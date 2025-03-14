@@ -27,7 +27,7 @@
                     : `playmates://playmate/playmate-registration?status=CANCELED&session_id=${sessionId}`;
             } else if (screen === "playmate-home") {
                 deepLink = sessionId
-                    ? `playmates://playmate/playmate-home?status=SUCCESS&session_id=${sessionId}`;
+                    ? `playmates://playmate/playmate-home?status=SUCCESS&session_id=${sessionId}`
                     : `playmates://playmate/playmate-home?status=CANCELED&session_id=${sessionId}`;
             } else {
                 document.body.innerHTML = `
