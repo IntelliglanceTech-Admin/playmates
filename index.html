@@ -6,10 +6,18 @@
     <title>Redirecting...</title>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // ✅ Extract Query Parameters (Use window.location.search instead of hash)
+            // ✅ Extract Hash Fragment (example: #screen=playmate-home)
+            const hash = window.location.hash.substring(1); // Remove "#"
+            const hashParams = new URLSearchParams(hash);
+            const screen = hashParams.get("screen");
+
+            // ✅ Extract session_id from URL Query Params (not hash)
             const urlParams = new URLSearchParams(window.location.search);
-            const screen = urlParams.get("screen"); // e.g., "playmate-home"
             const sessionId = urlParams.get("session_id");
+
+            console.log("🔹 Full URL:", window.location.href);
+            console.log("🔹 Extracted Screen:", screen);
+            console.log("🔹 Extracted Session ID:", sessionId);
 
             let deepLink = "";
 
@@ -26,6 +34,7 @@
                 document.body.innerHTML = `
                     <h2>Error: Invalid Deep Link</h2>
                     <p>Could not determine where to navigate.</p>
+                    <p>🔍 Debug Info: <br> <strong>Screen:</strong> ${screen} <br> <strong>Session ID:</strong> ${sessionId}</p>
                 `;
                 return;
             }
