@@ -5,21 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const sessionId = urlParams.get("session_id");
-        let deepLink;
+        document.addEventListener("DOMContentLoaded", function () {
+            // ✅ Extract Hash Fragment (example: #screen=eventDetails)
+            const hash = window.location.hash.substring(1);
+            const params = new URLSearchParams(hash);
 
-        alert(sessionId);
+            // ✅ Read Deep Link Parameters
+            const screen = params.get("screen"); // e.g., "eventDetails"
 
-        if(!sessionId){
-            deepLink = `playmates://playmate/playmate-registration?status=CANCELED`;
-        }
+            // ✅ Extract session_id from URL Query Params (not hash)
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get("session_id");
 
-        deepLink = `playmates://playmate/playmate-registration?session_id=${sessionId}&status=SUCCESS`;
+            let deepLink = "";
 
-        setTimeout(() => {
-            window.location.href = deepLink;
-        }, 1000);
+            // ✅ Handle Different Screens
+            if (screen === "playmate-registration") {
+                deepLink = sessionId
+                    ? `playmates://playmate/playmate-registration?session_id=${sessionId}&status=SUCCESS`
+                    : `playmates://playmate/playmate-registration?status=CANCELED`;
+            } else if (screen === "playmate-home") {
+                deepLink = sessionId
+                    ? `playmates://playmate/playmate-home?session_id=${sessionId}&status=SUCCESS`
+                    : `playmates://playmate/playmate-home?status=CANCELED`;
+            } else {
+                document.body.innerHTML = `
+                    <h2>Error: Invalid Deep Link</h2>
+                    <p>Could not determine where to navigate.</p>
+                `;
+                return;
+            }
+
+            console.log("🔹 Redirecting to:", deepLink);
+
+            // ✅ Redirect to Deep Link
+            setTimeout(() => {
+                window.location.href = deepLink;
+            }, 1000);
+
+            // ✅ Provide Fallback for Desktop Browsers
+            setTimeout(() => {
+                document.body.innerHTML = `
+                    <h2>Redirecting...</h2>
+                    <p>If the app does not open, <a href="${deepLink}">click here</a>.</p>
+                `;
+            }, 2000);
+        });
     </script>
 </head>
 <body>
