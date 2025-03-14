@@ -6,14 +6,10 @@
     <title>Redirecting...</title>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // ✅ Extract the hash fragment (example: #screen=playmate-home)
-            const hash = window.location.hash.substring(1); // Remove "#"
-            const hashParams = new URLSearchParams(hash);
-            const screen = hashParams.get("screen");
-
-            // ✅ Extract session_id from query parameters (example: ?session_id=cs_test_123)
+            // ✅ Extract query parameters correctly
             const urlParams = new URLSearchParams(window.location.search);
-            const sessionId = urlParams.get("session_id");
+            const screen = urlParams.get("screen"); // Should now be clean (e.g., "playmate-home")
+            const sessionId = urlParams.get("session_id"); // Extract session ID properly
 
             console.log("🔹 Full URL:", window.location.href);
             console.log("🔹 Extracted Screen:", screen);
