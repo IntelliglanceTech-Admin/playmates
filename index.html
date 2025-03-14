@@ -26,8 +26,8 @@
                     : `playmates://playmate/playmate-registration?status=CANCELED`;
             } else if (screen === "playmate-home") {
                 deepLink = sessionId
-                    ? `playmates://playmate/playmate-home?session_id=${sessionId}&status=SUCCESS`
-                    : `playmates://playmate/playmate-home?status=CANCELED`;
+                    ? encodeURIComponent(`playmates://playmate/playmate-home?session_id=${sessionId}&status=SUCCESS`)
+                    : encodeURIComponent(`playmates://playmate/playmate-home?status=CANCELED`);
             } else {
                 document.body.innerHTML = `
                     <h2>Error: Invalid Deep Link</h2>
