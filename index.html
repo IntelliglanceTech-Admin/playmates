@@ -22,12 +22,12 @@
             // ✅ Handle Different Screens
             if (screen === "playmate-registration") {
                 deepLink = sessionId
-                    ? `playmates://playmate/playmate-registration?session_id=${sessionId}&status=SUCCESS`
-                    : `playmates://playmate/playmate-registration?status=CANCELED`;
+                    ? `playmates://playmate/playmate-registration?status=SUCCESS&session_id=${sessionId}`
+                    : `playmates://playmate/playmate-registration?status=CANCELED&session_id=${sessionId}`;
             } else if (screen === "playmate-home") {
                 deepLink = sessionId
-                    ? encodeURIComponent(`playmates://playmate/playmate-home?session_id=${sessionId}&status=SUCCESS`)
-                    : encodeURIComponent(`playmates://playmate/playmate-home?status=CANCELED`);
+                    ? `playmates://playmate/playmate-home?status=SUCCESS&session_id=${sessionId}`;
+                    : `playmates://playmate/playmate-home?status=CANCELED&session_id=${sessionId}`;
             } else {
                 document.body.innerHTML = `
                     <h2>Error: Invalid Deep Link</h2>
