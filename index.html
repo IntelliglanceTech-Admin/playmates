@@ -25,6 +25,10 @@
                 deepLink = sessionId
                     ? `playmates://playmate/playmate-registration?status=SUCCESS&session_id=${sessionId}`
                     : `playmates://playmate/playmate-registration?status=CANCELED&session_id=${sessionId}`;
+            } else if (screen === "organizer-registration") {
+                deepLink = sessionId
+                    ? `playmates://organizer/organizer-registration?status=SUCCESS&session_id=${sessionId}`
+                    : `playmates://organizer/organizer-registration?status=CANCELED&session_id=${sessionId}`;
             } else if (screen === "playmate-home") {
                 deepLink = sessionId
                     ? `playmates://playmate/playmate-home?status=SUCCESS&session_id=${sessionId}`
