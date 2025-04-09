@@ -5,59 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // ✅ Extract query parameters correctly
-            const urlParams = new URLSearchParams(window.location.search);
-            const screen = urlParams.get("screen"); // Should now be clean (e.g., "playmate-home")
-            const sessionId = urlParams.get("session_id"); // Extract session ID properly
+document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const screen = urlParams.get("screen");
+    const sessionId = urlParams.get("session_id");
+    const code = urlParams.get("code"); // Instagram/Facebook code
+    let deepLink = "";
 
-            console.log("🔹 Full URL:", window.location.href);
-            console.log("🔹 Extracted Screen:", screen);
-            console.log("🔹 Extracted Session ID:", sessionId);
+    console.log("🔹 Full URL:", window.location.href);
+    console.log("🔹 Screen:", screen);
+    console.log("🔹 Session ID:", sessionId);
+    console.log("🔹 OAuth Code:", code);
 
-            alert(screen);
-            alert(sessionId);
+    if (code) {
+        // ✅ Instagram/Facebook OAuth Redirect
+        deepLink = `playmates://oauth-redirect?code=${code}`;
+    } else if (screen === "playmate-registration") {
+        deepLink = sessionId
+            ? `playmates://playmate/playmate-registration?status=SUCCESS&session_id=${sessionId}`
+            : `playmates://playmate/playmate-registration?status=CANCELED&session_id=${sessionId}`;
+    } else if (screen === "organizer-registration") {
+        deepLink = sessionId
+            ? `playmates://organizer/organizer-registration?status=SUCCESS&session_id=${sessionId}`
+            : `playmates://organizer/organizer-registration?status=CANCELED&session_id=${sessionId}`;
+    } else if (screen === "playmate-home") {
+        deepLink = sessionId
+            ? `playmates://playmate/playmate-home?status=SUCCESS&session_id=${sessionId}`
+            : `playmates://playmate/playmate-home?status=CANCELED&session_id=${sessionId}`;
+    } else {
+        document.body.innerHTML = `
+            <h2>Error: Invalid Deep Link</h2>
+            <p>Could not determine where to navigate.</p>
+            <p>🔍 Debug Info: <br> <strong>Screen:</strong> ${screen} <br> <strong>Session ID:</strong> ${sessionId} <br> <strong>Code:</strong> ${code}</p>
+        `;
+        return;
+    }
 
-            let deepLink = "";
+    // ✅ Redirect to deep link
+    console.log("🔹 Redirecting to:", deepLink);
+    window.location.href = deepLink;
 
-            // ✅ Handle Different Screens
-            if (screen === "playmate-registration") {
-                deepLink = sessionId
-                    ? `playmates://playmate/playmate-registration?status=SUCCESS&session_id=${sessionId}`
-                    : `playmates://playmate/playmate-registration?status=CANCELED&session_id=${sessionId}`;
-            } else if (screen === "organizer-registration") {
-                deepLink = sessionId
-                    ? `playmates://organizer/organizer-registration?status=SUCCESS&session_id=${sessionId}`
-                    : `playmates://organizer/organizer-registration?status=CANCELED&session_id=${sessionId}`;
-            } else if (screen === "playmate-home") {
-                deepLink = sessionId
-                    ? `playmates://playmate/playmate-home?status=SUCCESS&session_id=${sessionId}`
-                    : `playmates://playmate/playmate-home?status=CANCELED&session_id=${sessionId}`;
-            } else {
-                document.body.innerHTML = `
-                    <h2>Error: Invalid Deep Link</h2>
-                    <p>Could not determine where to navigate.</p>
-                    <p>🔍 Debug Info: <br> <strong>Screen:</strong> ${screen} <br> <strong>Session ID:</strong> ${sessionId}</p>
-                `;
-                return;
-            }
+    // Fallback link for non-mobile users
+    setTimeout(() => {
+        document.body.innerHTML = `
+            <h2>Redirecting...</h2>
+            <p>If the app does not open automatically, <a href="${deepLink}">click here</a>.</p>
+        `;
+    }, 2000);
+});
+</script>
 
-            console.log("🔹 Redirecting to:", deepLink);
-
-            alert(deepLink);
-
-            // ✅ Attempt to Open App Deep Link
-            window.location.href = deepLink;
-
-            // ✅ Provide a Fallback for Desktop Users
-            setTimeout(() => {
-                document.body.innerHTML = `
-                    <h2>Redirecting...</h2>
-                    <p>If the app does not open, <a href="${deepLink}">click here</a>.</p>
-                `;
-            }, 2000);
-        });
-    </script>
 </head>
 <body>
     <h2>Redirecting to app...</h2>
